@@ -1,4 +1,26 @@
-.App {
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+#hero {
+  background-image: url('./utilities/img/pg.jpg') !important ;
+  min-height: 100vh;
+  background-size: cover;
+  
+}
+
+.myCard{
+/* margin-right: auto !important ; */
+align-self: flex-end !important;
+/* align-self: right !important; */
+}
+ 
+#button-addon2{
+  background-color: black !important ;
+}
+/* .App {
   text-align: center;
 }
 
@@ -35,4 +57,4 @@
   to {
     transform: rotate(360deg);
   }
-}
+} */
