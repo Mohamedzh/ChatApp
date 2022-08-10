@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Card, Container, Form, InputGroup } from 'react-bootstrap';
+import { Button, Form, InputGroup } from 'react-bootstrap';
 
 type Props = {};
 
@@ -9,12 +9,6 @@ const Chatbox = (props: Props) => {
     { name: 'Me', text: 'Hello!' },
     { name: 'user2', text: 'Hello!' },
   ];
-
-  // const fakeMeData = [
-  //   { name: 'user1', text: 'Hello!' },
-  //   { name: 'user2', text: 'Hello!' },
-  //   { name: 'user3', text: 'Hello!' },
-  // ];
 
   return (
     <div>
@@ -48,7 +42,6 @@ const Chatbox = (props: Props) => {
             <p
               style={{
                 alignSelf: 'flex-end',
-                // paddingTop: '50px',
                 color: '#00000070',
               }}
             >
