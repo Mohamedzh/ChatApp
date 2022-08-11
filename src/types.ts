@@ -12,3 +12,10 @@ export interface Post {
   createdAt: Date,
   updatedAt: Date
 }
+
+export interface Tag {
+  title: string,
+  id: number,
+  createdAt: Date,
+  updatedAt: Date
+}
