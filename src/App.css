@@ -24,3 +24,19 @@ background-size: cover;
   color: red;
   font-size: small;
 }
+
+
+#hero {
+  background-image: url('./assets/img/pg.jpg') !important ;
+  min-height: 100vh;
+  background-size: cover;
+  
+}
+
+.myCard{
+align-self: flex-end !important;
+}
+ 
+#button-addon2{
+  background-color: black !important ;
+}

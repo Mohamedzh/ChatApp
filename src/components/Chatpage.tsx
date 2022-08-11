@@ -1,11 +1,22 @@
-import React from 'react'
+import React from 'react';
+import { Container } from 'react-bootstrap';
+import Chatbox from './Chatbox';
 
-type Props = {}
+type Props = {};
 
 const Chatpage = (props: Props) => {
   return (
-    <div>Chatpage</div>
-  )
-}
+    <div>
+      {' '}
+      <>
+        <div id="hero">
+          <Container className="p-3">
+            <Chatbox />
+          </Container>
+        </div>
+      </>
+    </div>
+  );
+};
 
-export default Chatpage
+export default Chatpage;
