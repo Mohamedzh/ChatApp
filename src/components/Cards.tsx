@@ -1,8 +1,7 @@
 import React from 'react';
 import { Card, Image } from 'react-bootstrap';
 import { User } from '../types';
-import useImg from '../utilities/img/32.jpg';
-
+import useImg from '../assets/img/32.jpg';
 type Props = {};
 
 const Cards = (props: Props) => {
@@ -55,7 +54,6 @@ const Cards = (props: Props) => {
             height: '6rem',
             marginTop: '20px',
             backgroundColor: '#F8F5F5',
-            
           }}
         >
           <Card.Body>

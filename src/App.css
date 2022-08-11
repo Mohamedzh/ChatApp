@@ -1,11 +1,33 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+.formColumn{
+  height: 100vh;
+  background-color: #EEEEEE
+} 
+#signup{
+background-image: url('./assets/img/signup_pic.jpg');
+background-size: cover;
+}
+
+#login{
+  background-image: url('./assets/img/login_pic.jpg');
+  background-size: cover ;
+  }
+
+.signRow{
+  margin-right: 0 !important;
+}
+
+.errorText {
+  color: red;
+  font-size: small;
+}
+
 
 #hero {
-  background-image: url('./utilities/img/pg.jpg') !important ;
+  background-image: url('./assets/img/pg.jpg') !important ;
   min-height: 100vh;
   background-size: cover;
   
