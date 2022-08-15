@@ -44,7 +44,7 @@ const LoginForm = () => {
         <Form.Group className="mb-3 text-start" controlId="formBasicPassword">
           <Form.Label>Password</Form.Label>
           <Form.Control
-            type="text"
+            type="password"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.password}
@@ -54,6 +54,7 @@ const LoginForm = () => {
           {formik.touched.password && formik.errors.password ? (
             <span className="errorText">{formik.errors.password}</span>
           ) : null}
+
         </Form.Group>
       </Form>
       <Button

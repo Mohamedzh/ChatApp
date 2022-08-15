@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, Image } from 'react-bootstrap';
-import { User } from '../types';
+import { User2 } from '../types';
 import useImg from '../assets/img/32.jpg';
 type Props = {};
 
@@ -46,7 +46,7 @@ const Cards = (props: Props) => {
 
   return (
     <div>
-      {fakeData.map((user: User) => (
+      {fakeData.map((user: User2) => (
         <Card
           key={user.id}
           style={{

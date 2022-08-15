@@ -1,28 +1,34 @@
-import React from 'react';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import { Button, Form } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import React from 'react'
+import { useFormik } from 'formik'
+import * as Yup from 'yup'
+import { Button, Form } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
+import { signUp } from '../api'
+
+
 
 const SignUpForm = () => {
   const formik = useFormik({
     initialValues: {
-      firstName: '',
-      lastName: '',
-      email: '',
-      password: '',
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
     },
-    onSubmit:  (values) => {
+    onSubmit: (values) => {
       console.log(values);
-
+      signUp(values);
+      formik.resetForm()
     },
-    validationSchema: Yup.object({
-      firstName: Yup.string().required('Please enter your first name'),
-      lastName: Yup.string().required('Please enter your last name'),
-      email: Yup.string().required('Please enter your email'),
-      password: Yup.string().required('Please enter your password'),
-    }),
-  });
+    validationSchema:
+      Yup.object({
+        firstName: Yup.string().required("Please enter your first name"),
+        lastName: Yup.string().required("Please enter your last name"),
+        email: Yup.string().required("Please enter your email"),
+        password: Yup.string().required("Please enter your password"),
+      }),
+  })
+
 
   return (
     <div className="d-flex flex-column w-72 justify-content-center my-5">
@@ -72,7 +78,7 @@ const SignUpForm = () => {
         <Form.Group className="mb-3 text-start" controlId="formBasicPassword">
           <Form.Label>Password</Form.Label>
           <Form.Control
-            type="text"
+            type="password"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.password}
@@ -83,14 +89,13 @@ const SignUpForm = () => {
           ) : null}
         </Form.Group>
       </Form>
-      <Button variant="secondary" type="submit" className="mt-5">
+      <Button variant="secondary" type="submit" className="mt-5" onClick={() => formik.handleSubmit()}>
         SignUp
       </Button>
-      <p className="text-center	">
-        Already have an account? <Link to="/login">Login</Link>
-      </p>
+      <p className='text-center	'>Already have an account? <Link to='/login'>Login</Link></p>
     </div>
-  );
-};
+  )
+}
+
 
 export default SignUpForm;

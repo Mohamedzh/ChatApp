@@ -15,13 +15,13 @@ function App() {
   const currentUserToken = localStorage.getItem('token') || '';
   const navigate = useNavigate();
 
-  if (!currentUserToken) {
-    <Navigate to="/login" />;
-  }
+  // if (!currentUserToken) {
+  //   <Navigate to="/login" />;
+  // }
   useEffect(() => {
     userSignInWithToken({ token: currentUserToken }, navigate, dispatch);
   }, []);
-
+  
   return (
     <div className="App">
       <Header />

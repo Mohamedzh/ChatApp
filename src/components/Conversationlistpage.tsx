@@ -1,10 +1,12 @@
-import React from 'react'
 import { Container } from 'react-bootstrap'
+import { useAppSelector } from '../redux/hooks'
 import Cards from './Cards'
 
 type Props = {}
 
 const Conversationlistpage = (props: Props) => {
+  const loggedIn = useAppSelector(state => state.loggedIn)
+
   return (
     <>
     <div id="hero">
