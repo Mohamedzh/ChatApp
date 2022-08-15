@@ -26,18 +26,20 @@ export const userSignInWithToken = async (token: { token: string }, navigate: Na
   await axios.post("http://localhost:5000/user/signinwithtoken", token).then((res) => {
     //Another way to validate the token
     // if (res.data.currentUser) {
-      dispatch(changeTheProtectionValue(true))
-      navigate("/chat")
+    dispatch(changeTheProtectionValue(true))
+    navigate("/chat")
     // }
   })
 }
 
 
-export const signUp = async (user: User) => {
+export const signUp = async (user: User, navigate: NavigateFunction, dispatch: Dispatch) => {
   await axios.post('http://localhost:5000/user/signup', user)
     .then((response) => {
       console.log(response.data.token);
       localStorage.setItem('token', response.data.token);
+      dispatch(changeTheProtectionValue(true))
+      navigate("/chat")
     })
 }
 
