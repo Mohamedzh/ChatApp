@@ -25,6 +25,7 @@ const Chatbox = (props: Props) => {
       >
         {fakeData.map((msg) => (
           <div
+          key={msg.name}
             className={msg.name === 'Me' ? 'myCard' : 'usersCard'}
             style={{
               width: '65%',

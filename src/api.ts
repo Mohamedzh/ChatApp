@@ -11,11 +11,7 @@ export const userSignIn = async (navigate: NavigateFunction, data: { email: stri
   await axios.post("http://localhost:5000/user/signin", data).then(res => {
     console.log(res.data)
     const token = res.data.token
-
     localStorage.setItem("token", token)
-
-    const decoded: decodedJWT = jwt_decode(token)
-
     dispatch(changeTheProtectionValue(true))
     navigate("/chat")
   })
@@ -30,8 +26,8 @@ export const userSignInWithToken = async (token: { token: string }, navigate: Na
   await axios.post("http://localhost:5000/user/signinwithtoken", token).then((res) => {
     //Another way to validate the token
     // if (res.data.currentUser) {
-    //   dispatch(changeTheProtectionValue(true))
-    //   navigate("/chat")
+      dispatch(changeTheProtectionValue(true))
+      navigate("/chat")
     // }
   })
 }
