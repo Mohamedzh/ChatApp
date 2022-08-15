@@ -6,7 +6,7 @@ import LoginForm from '../components/LoginForm'
 const Login = () => {
     return (
         <div>
-            <Row clasName="mx-0">
+            <Row className="mx-0">
                 <Col id="login">
 
                 </Col>

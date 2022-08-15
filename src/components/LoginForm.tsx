@@ -3,6 +3,7 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { Button, Form } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
+import { signIn } from './api'
 
 
 
@@ -14,6 +15,8 @@ const LoginForm = () => {
         },
         onSubmit: (values) => {
             console.log(values)
+            signIn(values);
+            formik.resetForm();
         },
         validationSchema:
             Yup.object({
@@ -52,7 +55,7 @@ const LoginForm = () => {
           ) : null}
                 </Form.Group>
             </Form>
-            <Button variant="secondary" type="submit" className="mt-5">
+            <Button variant="secondary" type="submit" className="mt-5" onClick={()=>formik.handleSubmit()}>
                 Login
             </Button>
             <p className='text-center	'>Don't have an account? <Link to='/'>SignUp</Link></p>
