@@ -1,20 +1,21 @@
+import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Button, Form } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { userSignIn } from '../api';
-//import { useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 const LoginForm = () => {
-  // const navigate = useNavigate();
-  // const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
       email: '',
       password: '',
     },
     onSubmit: async (values) => {
-      await userSignIn( values);
+      await userSignIn(navigate, values, dispatch);
       console.log(values);
     },
     validationSchema: Yup.object({

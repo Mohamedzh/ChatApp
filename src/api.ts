@@ -3,13 +3,13 @@ import { NavigateFunction } from "react-router-dom";
 import { Dispatch } from "redux";
 import { changeTheProtectionValue } from "./redux/features/ProtectSlice";
 
-export const userSignIn = async (  data:{ email: string, password: string }
+export const userSignIn = async (navigate: NavigateFunction, data: { email: string, password: string }, dispatch: Dispatch
 ) => {
   await axios.post("http://localhost:1111/user/signin", data).then(res => {
     console.log(res.data)
     localStorage.setItem("token", res.data.token)
-    // dispatch(changeTheProtectionValue(true))
-    // navigate("/chat")
+    dispatch(changeTheProtectionValue(true))
+    navigate("/chat")
   })
 
 
