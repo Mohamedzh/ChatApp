@@ -2,7 +2,6 @@ import React from 'react';
 import { Card, Image } from 'react-bootstrap';
 import { User2 } from '../types';
 import useImg from '../assets/img/32.jpg';
-
 type Props = {};
 
 const Cards = (props: Props) => {

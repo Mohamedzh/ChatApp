@@ -1,4 +1,4 @@
-import { verifySignIn } from "./api"
+import { verifySignIn } from "../api"
 import { NavigateFunction} from 'react-router-dom'
 import { Dispatch } from "@reduxjs/toolkit"
 import jwt_decode from 'jwt-decode'

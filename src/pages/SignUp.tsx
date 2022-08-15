@@ -1,6 +1,6 @@
 import React from 'react'
 import { Row, Col, Form, Button } from 'react-bootstrap'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import SignUpForm from '../components/SignUpForm'
 
 const SignUp = () => {
@@ -11,11 +11,11 @@ const SignUp = () => {
 
                 </Col>
                 <Col className="formColumn d-flex justify-content-center">
-                    
-                    <SignUpForm/>
-                    
+
+                    <SignUpForm />
+
                 </Col>
-                
+
             </Row>
         </div>
     )

@@ -1,6 +1,5 @@
-import React from 'react'
 import { Container } from 'react-bootstrap'
-import { useAppSelector } from '../App/hooks'
+import { useAppSelector } from '../redux/hooks'
 import Cards from './Cards'
 
 type Props = {}
@@ -10,13 +9,12 @@ const Conversationlistpage = (props: Props) => {
 
   return (
     <>
-    {loggedIn === true &&
     <div id="hero">
       <Container className="pt-5 pb-5 ">
         <Cards />
         
       </Container>
-    </div>}
+    </div>
   </>
   )
 }

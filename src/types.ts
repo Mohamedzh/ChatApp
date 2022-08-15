@@ -29,3 +29,9 @@ export interface decodedJWT {
   exp: number,
   iat: number
 }
+export interface Tag {
+  title: string,
+  id: number,
+  createdAt: Date,
+  updatedAt: Date
+}
