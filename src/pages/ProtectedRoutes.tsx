@@ -1,11 +1,12 @@
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate, Outlet } from 'react-router-dom';
 import { RootState } from '../redux/store';
 
 const useAuth = () => {
-  const protection = useSelector((state: RootState) => state.protection);
+  const  userStatus = useSelector((state: RootState) => state.user);
 
-  const user = { loggedIn: protection };
+  const user = { loggedIn: userStatus };
   return user && user.loggedIn;
 };
 

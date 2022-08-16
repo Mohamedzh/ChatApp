@@ -8,28 +8,18 @@ import Chatpage from './components/Chatpage';
 import Header from './components/Header';
 import ProtectedRoutes from './pages/ProtectedRoutes';
 import { userSignInWithToken } from './api';
-import { useDispatch } from 'react-redux';
-import io from 'socket.io-client';
 
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from './redux/store';
 
 function App() {
-
-  const socket = io(`ws://localhost:3131`);
-  socket.on('connect', () => {
-    console.log('connected');
-  });
-
-  socket.on('sendMessage', (args)=>
-  console.log('received a new message from server')
-  )
-
-  useEffect(() => { socket.emit('newMessage', 'a message was sent') }, [])
-
-
 
   const dispatch = useDispatch();
   const currentUserToken = localStorage.getItem('token') || '';
   const navigate = useNavigate();
+
+  const data = useSelector((state: RootState) => state.user);
+  console.log(data);
 
   // if (!currentUserToken) {
   //   <Navigate to="/login" />;

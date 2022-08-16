@@ -1,14 +1,22 @@
 import React from 'react';
 import { Button, Form, InputGroup } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
 
-type Props = {};
+type Props = {
+  message: string;
+  messageHandler: Function;
+  sendHandler: Function;
+};
 
-const Chatbox = (props: Props) => {
+const Chatbox = ({ message, messageHandler, sendHandler }: Props) => {
   const fakeData = [
     { name: 'user1', text: 'Hello!' },
     { name: 'Me', text: 'Hello!' },
     { name: 'user2', text: 'Hello!' },
   ];
+
+  const userName = useSelector((state: RootState) => state.user.name);
 
   return (
     <div>
@@ -25,7 +33,7 @@ const Chatbox = (props: Props) => {
       >
         {fakeData.map((msg) => (
           <div
-          key={msg.name}
+            key={msg.name}
             className={msg.name === 'Me' ? 'myCard' : 'usersCard'}
             style={{
               width: '65%',
@@ -56,8 +64,16 @@ const Chatbox = (props: Props) => {
               style={{ height: '60px' }}
               aria-label="Recipient's username"
               aria-describedby="basic-addon2"
+              onChange={(e) => {
+                messageHandler(e);
+              }}
+              value={message}
             />
-            <Button variant="secondary" id="button-addon2">
+            <Button
+              onClick={() => sendHandler(message, userName)}
+              variant="secondary"
+              id="button-addon2"
+            >
               Send
             </Button>
           </InputGroup>
