@@ -10,6 +10,9 @@ export interface User {
   lastName: string,
   email: string,
   password: string,
+  id?: number,
+  createdAt: Date,
+  updatedAt: Date,
 }
 
 export interface loginUser {
@@ -29,9 +32,20 @@ export interface decodedJWT {
   exp: number,
   iat: number
 }
-export interface Tag {
-  title: string,
+export interface Conversation {
   id: number,
   createdAt: Date,
   updatedAt: Date
 }
+
+
+export interface Message {
+  body: string,
+  id: number,
+  createdAt: Date,
+  updatedAt: Date,
+  user: User,
+  conversation?: Conversation
+}
+
+

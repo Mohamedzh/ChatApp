@@ -5,6 +5,7 @@ import { Button, Form } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { signUp } from '../api';
 import { useDispatch } from 'react-redux';
+import { User } from '../types';
 
 const SignUpForm = () => {
   const dispatch = useDispatch();
@@ -19,7 +20,7 @@ const SignUpForm = () => {
     },
     onSubmit: (values) => {
       console.log(values);
-      signUp(values, navigate, dispatch);
+      signUp(values as User, navigate, dispatch);
       formik.resetForm();
     },
     validationSchema: Yup.object({

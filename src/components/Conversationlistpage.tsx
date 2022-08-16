@@ -7,9 +7,7 @@ import Cards from './Cards'
 type Props = {}
 
 const Conversationlistpage = (props: Props) => {
-  const loggedIn = useAppSelector(state => state.loggedIn)
- 
-    
+
 
   return (
     <>

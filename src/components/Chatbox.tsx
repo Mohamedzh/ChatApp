@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button, Form, InputGroup } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
+import { getMessages } from '../api';
+import { stat } from 'fs/promises';
 
 type Props = {
   message: string;
@@ -16,7 +18,15 @@ const Chatbox = ({ message, messageHandler, sendHandler }: Props) => {
     { name: 'user2', text: 'Hello!' },
   ];
 
+  const dispatch = useDispatch();
   const userName = useSelector((state: RootState) => state.user.name);
+  const allMessages = useSelector((state: RootState) => state.message);
+
+  console.log(allMessages);
+
+  useEffect(() => {
+    getMessages(dispatch);
+  }, []);
 
   return (
     <div>
@@ -31,10 +41,10 @@ const Chatbox = ({ message, messageHandler, sendHandler }: Props) => {
           paddingBottom: '40px',
         }}
       >
-        {fakeData.map((msg) => (
+        {allMessages.map((msg) => (
           <div
-            key={msg.name}
-            className={msg.name === 'Me' ? 'myCard' : 'usersCard'}
+            key={msg.id}
+            // className={msg.name === 'Me' ? 'myCard' : 'usersCard'}
             style={{
               width: '65%',
               backgroundColor: 'white',
@@ -45,9 +55,9 @@ const Chatbox = ({ message, messageHandler, sendHandler }: Props) => {
               flexDirection: 'column',
             }}
           >
-            <b>{msg.name}</b>
+            <b>{msg.user.firstName}</b>
             <br />
-            <p>{msg.text}</p>
+            <p>{msg.body}</p>
             <p
               style={{
                 alignSelf: 'flex-end',
@@ -56,6 +66,7 @@ const Chatbox = ({ message, messageHandler, sendHandler }: Props) => {
             >
               7:21pm
             </p>
+            {/* <span> {msg.user.createdAt} </span> */}
           </div>
         ))}
         <div style={{ marginTop: '150px', display: 'flex' }}>
