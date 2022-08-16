@@ -10,10 +10,12 @@ export const userSignIn = async (navigate: NavigateFunction, data: { email: stri
 ) => {
   await axios.post("http://localhost:5000/user/signin", data).then(res => {
     console.log(res.data)
+    if (res.data.token){
     const token = res.data.token
     localStorage.setItem("token", token)
     dispatch(changeTheProtectionValue(true))
-    navigate("/chat")
+    navigate("/chat")}
+    else{alert(res.data)}
   })
 }
 

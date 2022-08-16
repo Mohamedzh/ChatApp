@@ -9,8 +9,24 @@ import Header from './components/Header';
 import ProtectedRoutes from './pages/ProtectedRoutes';
 import { userSignInWithToken } from './api';
 import { useDispatch } from 'react-redux';
+import io from 'socket.io-client';
+
 
 function App() {
+
+  const socket = io(`ws://localhost:3131`);
+  socket.on('connect', () => {
+    console.log('connected');
+  });
+
+  socket.on('sendMessage', (args)=>
+  console.log('received a new message from server')
+  )
+
+  useEffect(() => { socket.emit('newMessage', 'a message was sent') }, [])
+
+
+
   const dispatch = useDispatch();
   const currentUserToken = localStorage.getItem('token') || '';
   const navigate = useNavigate();
@@ -21,7 +37,7 @@ function App() {
   useEffect(() => {
     userSignInWithToken({ token: currentUserToken }, navigate, dispatch);
   }, []);
-  
+
   return (
     <div className="App">
       <Header />
