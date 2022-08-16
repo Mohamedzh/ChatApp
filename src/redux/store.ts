@@ -1,11 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import protectionReducer from "./features/ProtectSlice";
+import userReducer from "./features/UserSlice";
 import loggedInSlice from "./features/loggedIn-slice";
 
 
 export const store = configureStore({
   reducer: {
-    protection: protectionReducer,
+    user: userReducer,
     loggedIn: loggedInSlice
   }
 })
