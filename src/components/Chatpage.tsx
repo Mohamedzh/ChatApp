@@ -34,6 +34,7 @@ const Chatpage = (props: Props) => {
     };
 
     sendMessage(messageData);
+    
   };
 
 

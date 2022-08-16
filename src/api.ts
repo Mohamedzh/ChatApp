@@ -1,10 +1,9 @@
 import axios from "axios";
 import { NavigateFunction } from "react-router-dom";
 import { Dispatch } from "redux";
-import { logIn } from "./redux/features/loggedIn-slice";
+import { messages } from "./redux/features/messages-slice";
 import { changeTheUserState } from "./redux/features/UserSlice";
-import { decodedJWT, User } from "./types";
-import jwt_decode from 'jwt-decode'
+import { User } from "./types";
 
 export const userSignIn = async (navigate: NavigateFunction, data: { email: string, password: string }, dispatch: Dispatch
 ) => {
@@ -52,7 +51,7 @@ export const verifySignIn = async (token: { token: string }, dispatch: Dispatch)
     .then(response => {
       if (response.data.currentUser) {
         console.log(response.data);
-        dispatch(logIn(true))
+        dispatch(changeTheUserState({ loggedIn: true, name: response.data.firstName }))
       }
     });
 }
@@ -62,4 +61,13 @@ export const verifySignIn = async (token: { token: string }, dispatch: Dispatch)
 export const sendMessage = async (data: {
   body: string;
   userName: string;
-}) => await axios.post('http://localhost:5000/messages', data)
+}) => await axios.post('http://localhost:5000/messages/', data)
+
+
+
+
+export const getMessages = async (dispatch: Dispatch) => {
+  await axios.get("http://localhost:5000/messages/all").then(res =>dispatch(messages(res.data)) 
+  )
+
+}
