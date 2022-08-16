@@ -8,11 +8,12 @@ import Chatpage from './components/Chatpage';
 import Header from './components/Header';
 import ProtectedRoutes from './pages/ProtectedRoutes';
 import { userSignInWithToken } from './api';
+
 import { useDispatch, useSelector } from 'react-redux';
-import { stat } from 'fs';
 import { RootState } from './redux/store';
 
 function App() {
+
   const dispatch = useDispatch();
   const currentUserToken = localStorage.getItem('token') || '';
   const navigate = useNavigate();
