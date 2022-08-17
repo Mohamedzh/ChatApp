@@ -1,10 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Card, Image } from 'react-bootstrap';
 import { User2 } from '../types';
 import useImg from '../assets/img/32.jpg';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUserConversations } from '../api';
+import { useAppSelector } from '../redux/hooks';
 type Props = {};
-
 const Cards = (props: Props) => {
+  const chats = useAppSelector((state) => state.conversation);
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    getUserConversations(dispatch);
+  }, []);
   const fakeData = [
     {
       id: 1,
@@ -46,14 +54,16 @@ const Cards = (props: Props) => {
 
   return (
     <div>
-      {fakeData.map((user: User2) => (
+      {chats.map((user) => (
         <Card
+          onClick={() => console.log('test')}
           key={user.id}
           style={{
             width: '22rem',
             height: '6rem',
             marginTop: '20px',
             backgroundColor: '#F8F5F5',
+            cursor: 'pointer',
           }}
         >
           <Card.Body>
@@ -65,19 +75,21 @@ const Cards = (props: Props) => {
                     width: '50px',
                     height: '50px',
                   }}
-                  src={user.img}
+                  // src={user.img}
                   alt="userImg"
                 />
               </div>
               <div className="flex-grow-1 ms-3">
                 <div>
                   <b>
-                    {user.userName}
-                    test
+                    {/* {user.userName} */}
+                    Room 1
                   </b>
                 </div>
                 <div>
-                  <p style={{ color: '#00000070' }}>{user.body}</p>
+                  <p style={{ color: '#00000070' }}>
+                    {user.messages!.toString()}
+                  </p>
                 </div>
               </div>
             </div>

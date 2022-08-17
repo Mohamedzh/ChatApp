@@ -4,7 +4,7 @@ import { Navigate, Outlet } from 'react-router-dom';
 import { RootState } from '../redux/store';
 
 const useAuth = () => {
-  const  userStatus = useSelector((state: RootState) => state.user);
+  const userStatus = useSelector((state: RootState) => state.user);
 
   const user = { loggedIn: userStatus };
   return user && user.loggedIn;
@@ -12,7 +12,7 @@ const useAuth = () => {
 
 const ProtectedRoutes = () => {
   const isAuth = useAuth();
-  return isAuth ? <Outlet /> : <Navigate to="/login" />;
+  return isAuth.loggedIn ? <Outlet /> : <Navigate to="/login" />;
 };
 
 export default ProtectedRoutes;

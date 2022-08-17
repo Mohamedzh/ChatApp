@@ -2,16 +2,15 @@ import React from 'react';
 import { Container } from 'react-bootstrap';
 import Chatbox from './Chatbox';
 import io from 'socket.io-client';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../redux/store';
-import { getMessages, sendMessage } from '../api';
+import { sendMessage } from '../api';
 import { socketMessages } from '../redux/features/messages-slice';
 
 type Props = {};
 const Chatpage = (props: Props) => {
-  const dispatch = useDispatch()
-  const id = useSelector((state: RootState) => state.user.id);
+  const dispatch = useDispatch();
 
   const socket = io('ws://localhost:3131');
 
@@ -19,14 +18,17 @@ const Chatpage = (props: Props) => {
   //   socket.on('sendMessage', (socket) => { dispatch(socketMessages(socket)); console.log(socket) })
   // },[socket])
 
-  socket.on('sendMessage', (socket) => { 
-    dispatch(socketMessages(socket)); console.log(socket)
-   })
+  socket.on('sendMessage', (socket) => {
+//socket.to('Room1').emit('roomMessage', socket);
+    dispatch(socketMessages(socket));
+    console.log(socket);
+  });
+ // socket.on('roomMessage', (socket) => {
+   // console.log(socket);
+ // });
   //  socket.off('sendMessage')
 
-
   const [message, setMessage] = useState('');
-
 
   const messageHandler = (event: any) => {
     setMessage(event.target.value);
@@ -42,7 +44,6 @@ const Chatpage = (props: Props) => {
     };
     sendMessage(messageData);
   };
-
 
   return (
     <div>

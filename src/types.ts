@@ -35,7 +35,10 @@ export interface decodedJWT {
 export interface Conversation {
   id: number,
   createdAt: Date,
-  updatedAt: Date
+  updatedAt: Date,
+  chats: [],
+  messages?: Message[]
+
 }
 
 
