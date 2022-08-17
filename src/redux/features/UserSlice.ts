@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState = {
   loggedIn: false,
-  name: ""
+  id: 0
 }
 
 
@@ -13,10 +13,10 @@ export const userSlice = createSlice({
   reducers: {
     changeTheUserState: (state, action: PayloadAction<{
       loggedIn: boolean;
-      name: string;
+      id: number;
     }>) => {
       state.loggedIn = action.payload.loggedIn
-      state.name = action.payload.name
+      state.id = action.payload.id
 
     }
   }
