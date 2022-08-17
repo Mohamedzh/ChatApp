@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { getMessages } from '../api';
 import { stat } from 'fs/promises';
+import moment from 'moment';
 
 type Props = {
   message: string;
@@ -19,7 +20,7 @@ const Chatbox = ({ message, messageHandler, sendHandler }: Props) => {
   ];
 
   const dispatch = useDispatch();
-  const userName = useSelector((state: RootState) => state.user.name);
+  const userName = useSelector((state: RootState) => state.user.id);
   const allMessages = useSelector((state: RootState) => state.message);
 
   console.log(allMessages);
@@ -27,6 +28,7 @@ const Chatbox = ({ message, messageHandler, sendHandler }: Props) => {
   useEffect(() => {
     getMessages(dispatch);
   }, []);
+
 
   return (
     <div>
@@ -41,9 +43,9 @@ const Chatbox = ({ message, messageHandler, sendHandler }: Props) => {
           paddingBottom: '40px',
         }}
       >
-        {allMessages.map((msg) => (
+        {allMessages.map((msg, idx) => (
           <div
-            key={msg.id}
+            key={idx}
             // className={msg.name === 'Me' ? 'myCard' : 'usersCard'}
             style={{
               width: '65%',
@@ -55,7 +57,7 @@ const Chatbox = ({ message, messageHandler, sendHandler }: Props) => {
               flexDirection: 'column',
             }}
           >
-            <b>{msg.user.firstName}</b>
+            <b>{msg.user?.firstName}</b>
             <br />
             <p>{msg.body}</p>
             <p
@@ -64,9 +66,8 @@ const Chatbox = ({ message, messageHandler, sendHandler }: Props) => {
                 color: '#00000070',
               }}
             >
-              7:21pm
+              {moment(msg.createdAt).format('MMMM Do YYYY, h:mm a')}
             </p>
-            {/* <span> {msg.user.createdAt} </span> */}
           </div>
         ))}
         <div style={{ marginTop: '150px', display: 'flex' }}>

@@ -41,10 +41,10 @@ export interface Conversation {
 
 export interface Message {
   body: string,
-  id: number,
-  createdAt: Date,
-  updatedAt: Date,
-  user: User,
+  id?: number,
+  createdAt: number,
+  updatedAt?: Date,
+  user?: User,
   conversation?: Conversation
 }
 

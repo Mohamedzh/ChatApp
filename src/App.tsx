@@ -19,11 +19,7 @@ function App() {
   const navigate = useNavigate();
 
   const data = useSelector((state: RootState) => state.user);
-  console.log(data);
 
-  // if (!currentUserToken) {
-  //   <Navigate to="/login" />;
-  // }
   useEffect(() => {
     userSignInWithToken({ token: currentUserToken }, navigate, dispatch);
   }, []);

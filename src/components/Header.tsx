@@ -6,7 +6,6 @@ type Props = {};
 
 const Header = (props: Props) => {
   const location = useLocation();
-  console.log(location);
 
   return (
     <>

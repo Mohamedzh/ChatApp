@@ -3,38 +3,44 @@ import { Container } from 'react-bootstrap';
 import Chatbox from './Chatbox';
 import io from 'socket.io-client';
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../redux/store';
-import { sendMessage } from '../api';
+import { getMessages, sendMessage } from '../api';
+import { socketMessages } from '../redux/features/messages-slice';
 
 type Props = {};
 const Chatpage = (props: Props) => {
-  const name = useSelector((state: RootState) => state.user.name);
+  const dispatch = useDispatch()
+  const id = useSelector((state: RootState) => state.user.id);
 
   const socket = io('ws://localhost:3131');
 
+  // useEffect(()=>{
+  //   socket.on('sendMessage', (socket) => { dispatch(socketMessages(socket)); console.log(socket) })
+  // },[socket])
+
+  socket.on('sendMessage', (socket) => { 
+    dispatch(socketMessages(socket)); console.log(socket)
+   })
+  //  socket.off('sendMessage')
+
+
   const [message, setMessage] = useState('');
-  // const loggedIn = useAppSelector(state => state.loggedIn)
+
 
   const messageHandler = (event: any) => {
     setMessage(event.target.value);
   };
 
-  socket.on('userMessage', (arg) => {
-    console.log(arg);
-  });
-
   // messageBody:is the massage which we are sending as prams from the funcation in chatbox comp
 
-  const sendHandler = (messageBody: string, name: string) => {
-    socket.emit('newMessage', { body: messageBody, userName: name });
+  const sendHandler = (messageBody: string, id: number) => {
+    socket.emit('newMessage', { body: messageBody, id });
     const messageData = {
       body: message,
-      userName: name,
+      id: id,
     };
-
     sendMessage(messageData);
-    
   };
 
 
