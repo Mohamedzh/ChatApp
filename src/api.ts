@@ -3,7 +3,9 @@ import { NavigateFunction } from "react-router-dom";
 import { Dispatch } from "redux";
 import { messages } from "./redux/features/messages-slice";
 import { changeTheUserState } from "./redux/features/UserSlice";
-import { Message, User } from "./types";
+import { decodedJWT, User } from "./types";
+import jwt_decode from "jwt-decode"
+import { getChat } from "./redux/features/conversation-slice";
 
 export const userSignIn = async (navigate: NavigateFunction, data: { email: string, password: string }, dispatch: Dispatch
 ) => {
@@ -14,7 +16,7 @@ export const userSignIn = async (navigate: NavigateFunction, data: { email: stri
       const token = res.data.token
       localStorage.setItem("token", token)
       dispatch(changeTheUserState({ loggedIn: true, id: res.data.id }))
-      navigate("/chat")
+      navigate("/conversations")
     } else {
       alert(res.data)
     }
@@ -23,10 +25,10 @@ export const userSignIn = async (navigate: NavigateFunction, data: { email: stri
 
 
 export const userSignInWithToken = async (token: { token: string }, navigate: NavigateFunction, dispatch: Dispatch) => {
-  // const decoded: decodedJWT = jwt_decode(token.token)
-  // if (decoded.exp < Date.now() / 1000) {
-  //   localStorage.removeItem('token')
-  // }
+  const decoded: decodedJWT = jwt_decode(token.token)
+  if (decoded.exp < Date.now() / 1000) {
+    localStorage.removeItem('token')
+  }
   await axios.post("http://localhost:5000/user/signinwithtoken", token).then((res) => {
     //Another way to validate the token
     // if (res.data.currentUser) {
@@ -43,7 +45,7 @@ export const signUp = async (user: User, navigate: NavigateFunction, dispatch: D
       console.log(response.data.token);
       localStorage.setItem('token', response.data.token);
       dispatch(changeTheUserState({ loggedIn: true, id: response.data.id }))
-      navigate("/chat")
+      navigate("/conversations")
     })
 }
 
@@ -77,4 +79,10 @@ export const getMessages = async (dispatch: Dispatch) => {
 
 export const addSocketMsg = () => {
 
+}
+
+
+
+export const getUserConversations = async (dispatch: Dispatch) => {
+  await axios.get("http://localhost:5000/conversations").then(res => { dispatch(getChat(res.data)); console.log(res.data) })
 }

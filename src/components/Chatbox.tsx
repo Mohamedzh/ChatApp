@@ -12,12 +12,7 @@ type Props = {
 };
 
 const Chatbox = ({ message, messageHandler, sendHandler }: Props) => {
-  const fakeData = [
-    { name: 'user1', text: 'Hello!' },
-    { name: 'Me', text: 'Hello!' },
-    { name: 'user2', text: 'Hello!' },
-  ];
-
+  
   const dispatch = useDispatch();
   const userName = useSelector((state: RootState) => state.user.id);
   const allMessages = useSelector((state: RootState) => state.message);
@@ -27,7 +22,6 @@ const Chatbox = ({ message, messageHandler, sendHandler }: Props) => {
   useEffect(() => {
     getMessages(dispatch);
   }, []);
-
 
   return (
     <div>
