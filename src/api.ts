@@ -15,7 +15,8 @@ export const userSignIn = async (navigate: NavigateFunction, data: { email: stri
     if (res.data.token) {
       const token = res.data.token
       localStorage.setItem("token", token)
-      dispatch(changeTheUserState({ loggedIn: true, id: res.data.id }))
+      console.log(res.data)
+      dispatch(changeTheUserState({ loggedIn: true, id: res.data.user.id }))
       navigate("/conversations")
     } else {
       alert(res.data)
@@ -24,12 +25,12 @@ export const userSignIn = async (navigate: NavigateFunction, data: { email: stri
 }
 
 
-export const userSignInWithToken = async (token: { token: string }, navigate: NavigateFunction, dispatch: Dispatch) => {
-  const decoded: decodedJWT = jwt_decode(token.token)
+export const userSignInWithToken = async (token: string, navigate: NavigateFunction, dispatch: Dispatch) => {
+  const decoded: decodedJWT = jwt_decode(token)
   if (decoded.exp < Date.now() / 1000) {
     localStorage.removeItem('token')
   }
-  await axios.post("http://localhost:5000/user/signinwithtoken", token).then((res) => {
+  await axios.get("http://localhost:5000/user/signinwithtoken", {headers:{token}}).then((res) => {
     //Another way to validate the token
     // if (res.data.currentUser) {
     dispatch(changeTheUserState({ loggedIn: true, id: res.data.id }))
@@ -69,18 +70,9 @@ export const sendMessage = async (data: {
 }
 
 
-
-
-
-
 export const getMessages = async (dispatch: Dispatch) => {
-  await axios.get("http://localhost:5000/messages/all").then(res => { dispatch(messages(res.data)); console.log(res.data) })
+  await axios.get("http://localhost:5000/messages/all").then(res => { dispatch(messages(res.data))})
 }
-
-export const addSocketMsg = () => {
-
-}
-
 
 
 export const getUserConversations = async (dispatch: Dispatch) => {
