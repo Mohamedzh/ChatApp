@@ -91,7 +91,7 @@ const SignUpForm = () => {
         </Form.Group>
       </Form>
       <Button
-        variant="secondary"
+        variant="outline-secondary"
         type="submit"
         className="mt-5"
         onClick={() => formik.handleSubmit()}

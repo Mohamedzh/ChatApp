@@ -59,7 +59,7 @@ const LoginForm = () => {
       </Form>
       <Button
         onClick={() => formik.handleSubmit()}
-        variant="secondary"
+        variant="outline-secondary"
         type="submit"
         className="mt-5"
       >

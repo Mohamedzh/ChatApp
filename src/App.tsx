@@ -15,13 +15,16 @@ import { RootState } from './redux/store';
 function App() {
   const dispatch = useDispatch();
   const currentUserToken = localStorage.getItem('token') || '';
+  console.log(typeof currentUserToken);
+  console.log(currentUserToken);
+
   const navigate = useNavigate();
 
   const data = useSelector((state: RootState) => state.user);
   console.log(data);
 
   useEffect(() => {
-    userSignInWithToken({ token: currentUserToken }, navigate, dispatch);
+    userSignInWithToken(currentUserToken, navigate, dispatch);
   }, []);
 
   return (
