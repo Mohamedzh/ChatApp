@@ -1,11 +1,22 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Navbar, Container } from 'react-bootstrap';
+import { Navbar, Container, NavDropdown, Nav } from 'react-bootstrap';
+import { Link, useNavigate } from 'react-router-dom'
+import { signOut } from './functions';
+import ConversationForm from './NewConversationForm';
+import { io, Socket } from 'socket.io-client';
 
-type Props = {};
 
-const Header = (props: Props) => {
+
+const Header = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+
+
+
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   return (
     <>
@@ -18,6 +29,20 @@ const Header = (props: Props) => {
             <Navbar>
               <p className="text-black-50 fs-3 ">Chat</p>
             </Navbar>
+            <Nav className="ms-auto">
+              <Nav.Link><Link to="/chat">Main Chat</Link></Nav.Link>
+              <Nav.Link><Link to="/conversations">Group Chats</Link></Nav.Link>
+              <NavDropdown title="Actions" id="collasible-nav-dropdown">
+                <NavDropdown.Item onClick={() => handleShow()}>New conversation</NavDropdown.Item>
+
+                <ConversationForm show={show} handleClose={handleClose} handleShow={handleShow}  />
+
+                <NavDropdown.Divider />
+                <NavDropdown.Item onClick={() => signOut(navigate)}>
+                  Logout
+                </NavDropdown.Item>
+              </NavDropdown>
+            </Nav>
           </Container>
         </Navbar>
       )}

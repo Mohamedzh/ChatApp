@@ -14,11 +14,10 @@ type Props = {
 const Chatbox = ({ message, messageHandler, sendHandler }: Props) => {
   
   const dispatch = useDispatch();
-  const userName = useSelector((state: RootState) => state.user.id);
+  const id = useSelector((state: RootState) => state.user.id);
   const allMessages = useSelector((state: RootState) => state.message);
 
-  console.log(allMessages);
-
+  
   useEffect(() => {
     getMessages(dispatch);
   }, []);
@@ -75,7 +74,7 @@ const Chatbox = ({ message, messageHandler, sendHandler }: Props) => {
               value={message}
             />
             <Button
-              onClick={() => sendHandler(message, userName)}
+              onClick={(e) => sendHandler(message, id)}
               variant="secondary"
               id="button-addon2"
             >

@@ -1,63 +1,32 @@
 import React, { useEffect } from 'react';
 import { Card, Image } from 'react-bootstrap';
-import { User2 } from '../types';
 import useImg from '../assets/img/32.jpg';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserConversations } from '../api';
 import { useAppSelector } from '../redux/hooks';
+import { useNavigate } from 'react-router-dom';
+import userEvent from '@testing-library/user-event';
+
 type Props = {};
 const Cards = (props: Props) => {
-  const chats = useAppSelector((state) => state.conversation);
+  const user = useAppSelector(state => state.user);
+  const userChats = useAppSelector((state) => state.chatUsers.current);
+  console.log(userChats)
+
+  console.log(user.id)
+  const navigate = useNavigate()
 
   const dispatch = useDispatch();
   useEffect(() => {
     getUserConversations(dispatch);
   }, []);
-  const fakeData = [
-    {
-      id: 1,
-      userName: 'iisenor0',
-      body: 'Hello!',
-      img: useImg,
-    },
-    {
-      id: 2,
-      userName: 'jmccue1',
-      body: 'Hello!',
-      img: useImg,
-    },
-    {
-      id: 3,
-      userName: 'odimmock2',
-      body: 'Hello!',
-      img: useImg,
-    },
-    {
-      id: 4,
-      userName: 'vbeverley3',
-      body: 'Hello!',
-      img: useImg,
-    },
-    {
-      id: 5,
-      userName: 'kletixier4',
-      body: 'Hello!',
-      img: useImg,
-    },
-    {
-      id: 6,
-      userName: 'kgiffkins5',
-      body: 'Hello!',
-      img: useImg,
-    },
-  ];
-
+  
   return (
     <div>
-      {chats.map((user) => (
+      {userChats.map((chat) => (
         <Card
-          onClick={() => console.log('test')}
-          key={user.id}
+          onClick={() => navigate(`/conversations/${chat.id}`)}
+          key={chat.id}
           style={{
             width: '22rem',
             height: '6rem',
@@ -75,20 +44,19 @@ const Cards = (props: Props) => {
                     width: '50px',
                     height: '50px',
                   }}
-                  // src={user.img}
+                  src={useImg}
                   alt="userImg"
                 />
               </div>
               <div className="flex-grow-1 ms-3">
                 <div>
                   <b>
-                    {/* {user.userName} */}
-                    Room 1
+                    {chat.title}
                   </b>
                 </div>
                 <div>
                   <p style={{ color: '#00000070' }}>
-                    {user.messages!.toString()}
+                    {/* with {chat.users[1].firstName} */}
                   </p>
                 </div>
               </div>
