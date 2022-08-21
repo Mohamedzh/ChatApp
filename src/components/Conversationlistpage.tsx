@@ -5,7 +5,7 @@ import  Cards  from './Cards';
 
 type Props = {};
 
-const Conversationlistpage = (props: Props) => {
+const ConversationListPage = (props: Props) => {
   return (
     <>
       <div id="hero">
@@ -17,4 +17,4 @@ const Conversationlistpage = (props: Props) => {
   );
 };
 
-export default Conversationlistpage;
+export default ConversationListPage;

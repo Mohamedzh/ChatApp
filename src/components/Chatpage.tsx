@@ -1,29 +1,36 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import Chatbox from './Chatbox';
-import io from 'socket.io-client';
-import { useState } from 'react';
+import io, { Socket } from 'socket.io-client';
 import { useSelector, useDispatch } from 'react-redux';
 import { sendMessage } from '../api';
 import { socketMessages } from '../redux/features/messages-slice';
+import { useAppSelector } from '../redux/hooks';
 
-type Props = {};
-const Chatpage = (props: Props) => {
+type Props = {
+  socket:Socket
+};
+
+const ChatPage = ({socket}: Props) => {
   const dispatch = useDispatch();
+  const user = useAppSelector(state => state.user);
+  // const [socket, setSocket] = useState<Socket>()
 
-  const socket = io('ws://localhost:3131');//put in useState
+  // useEffect(() => {
+  //   setSocket(io('ws://localhost:3131'))
+  // }, []);
 
-  useEffect(()=>{
-    socket.on('sendMessage', (socket) => { dispatch(socketMessages(socket)); console.log(socket) })
-  },[])
+  useEffect(() => {
+    socket?.on('sendMessage', (message) => { dispatch(socketMessages(message)); console.log(message) })
+  }, [socket])
 
-  
- // socket.on('roomMessage', (socket) => {
-   // console.log(socket);
- // });
-  //  socket.off('sendMessage')
+  socket?.on('connect', () => {
+    console.log(`joining room ${user.id}`)
+    socket?.emit('join', (user.id));
+  });
 
-  const [message, setMessage] = useState('');
+
+  const [message, setMessage] = useState<string>('');
 
   const messageHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setMessage(event.target.value);
@@ -31,7 +38,7 @@ const Chatpage = (props: Props) => {
 
 
   const sendHandler = (messageBody: string, id: number) => {
-    socket.emit('newMessage', { body: messageBody, id });
+    socket?.emit('newMessage', { body: messageBody, id });
     const messageData = {
       body: message,
       id: id,
@@ -56,4 +63,4 @@ const Chatpage = (props: Props) => {
   );
 };
 
-export default Chatpage;
+export default ChatPage;
