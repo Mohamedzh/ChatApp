@@ -2,21 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
-.formColumn{
+.formColumn {
   height: 100vh;
   background-color: #EEEEEE
-} 
-#signup{
-background-image: url('./assets/img/signup_pic.jpg');
-background-size: cover;
 }
 
-#login{
-  background-image: url('./assets/img/login_pic.jpg');
-  background-size: cover ;
-  }
+#signup {
+  background-image: url('./assets/img/signup_pic.jpg');
+  background-size: cover;
+}
 
-.signRow{
+#login {
+  background-image: url('./assets/img/login_pic.jpg');
+  background-size: cover;
+}
+
+.signRow {
   margin-right: 0 !important;
 }
 
@@ -27,16 +28,44 @@ background-size: cover;
 
 
 #hero {
-  background-image: url('./assets/img/pg.jpg') !important ;
+  background-image: url('./assets/img/pg.jpg') !important;
   min-height: 100vh;
   background-size: cover;
-  
+
 }
 
-.myCard{
-align-self: flex-end !important;
+.myCard {
+  align-self: flex-end !important;
 }
- 
-#button-addon2{
-  background-color: black !important ;
+
+#button-addon2 {
+  background-color: black !important;
+}
+
+.chatPageDiv {
+  min-height: 80vh;
+  background-color: #eeeeee;
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+  padding: 20px;
+  padding-bottom: 40px;
+}
+
+.chatBoxMessages {
+  width: '65%';
+  background-color: white;
+  border-radius: 5px;
+  padding: 25px;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.conversationCard {
+  width: 22rem;
+    height: 6rem;
+    margin-top: 20px;
+    background-color: #F8F5F5;
+    cursor: pointer;
 }

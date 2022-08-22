@@ -1,3 +1,8 @@
+import { Socket } from "socket.io-client";
+
+export interface AppProps{
+  socket?:Socket
+}
 export interface User2 {
   img: string | undefined;
   userName: string,

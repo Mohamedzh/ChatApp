@@ -15,7 +15,7 @@ const Chatbox = ({ message, messageHandler, sendHandler }: Props) => {
   
   const dispatch = useDispatch();
   const id = useSelector((state: RootState) => state.user.id);
-  const allMessages = useSelector((state: RootState) => state.message);
+  const allMessages = useSelector((state: RootState) => state.message.allMessages);
 
   
   useEffect(() => {
@@ -25,29 +25,13 @@ const Chatbox = ({ message, messageHandler, sendHandler }: Props) => {
   return (
     <div>
       <div
-        style={{
-          minHeight: '80vh',
-          backgroundColor: '#eeeeee',
-          display: 'flex',
-          flexDirection: 'column',
-          borderRadius: '5px',
-          padding: '20px',
-          paddingBottom: '40px',
-        }}
+      className="chatPageDiv"
       >
         {allMessages.map((msg, idx) => (
           <div
+          className='chatBoxMessages'
             key={idx}
             // className={msg.name === 'Me' ? 'myCard' : 'usersCard'}
-            style={{
-              width: '65%',
-              backgroundColor: 'white',
-              borderRadius: '5px',
-              padding: '25px',
-              marginTop: '20px',
-              display: 'flex',
-              flexDirection: 'column',
-            }}
           >
             <b>{msg.user?.firstName}</b>
             <br />

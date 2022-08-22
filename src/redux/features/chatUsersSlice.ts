@@ -2,9 +2,9 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Conversation } from "../../types";
 
 
-const initialState: { new: number[], current: Conversation[], currentUserIds:number[] } = {
+const initialState: { new: number[], currentChat: Conversation[], currentUserIds:number[] } = {
   new: [],
-  current: [],
+  currentChat: [],
   currentUserIds: []
 }
 
@@ -20,7 +20,7 @@ export const chatUsersSlice = createSlice({
       state.new = []
     },
     addConversations: (state, action: PayloadAction<Conversation[]>) => {
-      state.current = (action.payload)
+      state.currentChat = (action.payload)
     },
     addUserIds: (state, action: PayloadAction<number[]>) => {
       state.currentUserIds = (action.payload)

@@ -7,7 +7,7 @@ import ConversationListPage from './components/ConversationListPage';
 import ChatPage from './components/ChatPage';
 import Header from './components/Header';
 import ProtectedRoutes from './pages/ProtectedRoutes';
-import { userSignInWithToken } from './api';
+import { getUserConversations, userSignInWithToken } from './api';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from './redux/store';
 import { io, Socket } from 'socket.io-client';
@@ -29,35 +29,29 @@ function App() {
 
   const [socket, setSocket] = useState<Socket>()
 
+  const getUser = async () => {
+    const currentUser = await userSignInWithToken(currentUserToken, navigate, dispatch, socket!, user)
+  }
+
+
   useEffect(() => {
     setSocket(io('ws://localhost:3131'));
-    // socket?.emit('join', user.id);
+    getUser()
+    // userSignInWithToken(currentUserToken, navigate, dispatch, socket!, user);
   }, []);
 
-  socket?.on('connect', ()=>{
-    socket?.emit('join', user.id);
-  })
-
-  // useEffect(() => {
-  //   socket?.on('connection', () => {
-  //     socket?.emit('join', user.id);
-  //   })
-  // }, [])
-
-
-
-  useEffect(() => {
-    userSignInWithToken(currentUserToken, navigate, dispatch, socket!, user);
-  }, []);
+  // socket?.on('connect', () => {
+  //   socket?.emit('join', user.id);
+  // })
 
   return (
     <div className="App">
-      <Header />
+      <Header socket={socket!} />
       <Routes>
         <Route path="/" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
         <Route element={<ProtectedRoutes />}>
-          <Route path="/conversations" element={<ConversationListPage />} />
+          <Route path="/conversations" element={<ConversationListPage socket={socket!} />} />
           <Route path="/conversations/:id" element={<ChatDetails socket={socket!} />} />
           <Route path="/chat" element={<ChatPage socket={socket!} />} />
         </Route>

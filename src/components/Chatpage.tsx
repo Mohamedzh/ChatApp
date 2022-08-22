@@ -16,18 +16,15 @@ const ChatPage = ({socket}: Props) => {
   const user = useAppSelector(state => state.user);
   // const [socket, setSocket] = useState<Socket>()
 
-  // useEffect(() => {
-  //   setSocket(io('ws://localhost:3131'))
-  // }, []);
 
   useEffect(() => {
     socket?.on('sendMessage', (message) => { dispatch(socketMessages(message)); console.log(message) })
   }, [socket])
 
-  socket?.on('connect', () => {
-    console.log(`joining room ${user.id}`)
-    socket?.emit('join', (user.id));
-  });
+  // socket?.on('connect', () => {
+  //   console.log(`joining room ${user.id}`)
+  //   socket?.emit('join', (user.id));
+  // });
 
 
   const [message, setMessage] = useState<string>('');

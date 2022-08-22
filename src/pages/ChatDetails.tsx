@@ -22,7 +22,7 @@ function ChatDetails({ socket }: Props) {
     const userId = useAppSelector(state => state.user.id);
 
     const currentUserIds = useAppSelector(state => state.chatUsers.currentUserIds)
-    const allMessages = useAppSelector(state => state.message);
+    const allMessages = useAppSelector(state => state.message.chatMessages);
 
     const sendToUserSocket = (message: string, userIds: number[]) => {
         socket?.emit('aMessage', {
@@ -53,35 +53,19 @@ function ChatDetails({ socket }: Props) {
             formik.resetForm();
         },
         validationSchema: Yup.object({
-            message: Yup.string().required('Please enter a title'),
+            message: Yup.string().required('Please enter your message'),
         }),
     });
     return (
         <div>
             <div
-                style={{
-                    minHeight: '80vh',
-                    backgroundColor: '#eeeeee',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    borderRadius: '5px',
-                    padding: '20px',
-                    paddingBottom: '40px',
-                }}
+                className="chatPageDiv"
             >
                 {allMessages.map((msg, idx) => (
                     <div
+                        className="chatBoxMessages"
                         key={idx}
                         // className={msg.name === 'Me' ? 'myCard' : 'usersCard'}
-                        style={{
-                            width: '65%',
-                            backgroundColor: 'white',
-                            borderRadius: '5px',
-                            padding: '25px',
-                            marginTop: '20px',
-                            display: 'flex',
-                            flexDirection: 'column',
-                        }}
                     >
                         <b>{msg.user?.firstName}</b>
                         <br />
@@ -107,17 +91,22 @@ function ChatDetails({ socket }: Props) {
                             value={formik.values.message}
                             name="message"
                         />
-                        {formik.touched.message && formik.errors.message ? (
-                            <span className="errorText">{formik.errors.message}</span>
-                        ) : null}
                         <Button
+                            type="submit"
                             onClick={() => formik.handleSubmit()}
                             variant="secondary"
                             id="button-addon2"
                         >
                             Send
                         </Button>
+
                     </InputGroup>
+
+                </div>
+                <div>
+                    {formik.touched.message && formik.errors.message ? (
+                        <p className="errorText">{formik.errors.message}</p>
+                    ) : null}
                 </div>
             </div>
         </div>

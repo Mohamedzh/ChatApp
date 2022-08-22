@@ -5,15 +5,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getUserConversations } from '../api';
 import { useAppSelector } from '../redux/hooks';
 import { useNavigate } from 'react-router-dom';
-import userEvent from '@testing-library/user-event';
 
-type Props = {};
-const Cards = (props: Props) => {
+const Cards = () => {
   const user = useAppSelector(state => state.user);
-  const userChats = useAppSelector((state) => state.chatUsers.current);
-  console.log(userChats)
+  const userChats = useAppSelector((state) => state.chatUsers.currentChat);
 
-  console.log(user.id)
   const navigate = useNavigate()
 
   const dispatch = useDispatch();
@@ -25,15 +21,9 @@ const Cards = (props: Props) => {
     <div>
       {userChats.map((chat) => (
         <Card
+        className="conversationCard"
           onClick={() => navigate(`/conversations/${chat.id}`)}
           key={chat.id}
-          style={{
-            width: '22rem',
-            height: '6rem',
-            marginTop: '20px',
-            backgroundColor: '#F8F5F5',
-            cursor: 'pointer',
-          }}
         >
           <Card.Body>
             <div className="d-flex">
