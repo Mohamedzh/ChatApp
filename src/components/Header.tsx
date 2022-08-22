@@ -5,13 +5,16 @@ import { Link, useNavigate } from 'react-router-dom'
 import { signOut } from './functions';
 import ConversationForm from './NewConversationForm';
 import { io, Socket } from 'socket.io-client';
+import { useAppSelector } from '../redux/hooks';
 
+type Props = {
+  socket:Socket
+}
 
-
-const Header = () => {
+const Header = ({socket}:Props) => {
+  const user = useAppSelector(state => state.user);
   const location = useLocation();
   const navigate = useNavigate();
-
 
 
   const [show, setShow] = useState(false);

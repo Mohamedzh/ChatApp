@@ -2,17 +2,20 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Message } from '../../types';
 
 
-const initialState: Message[] = []
+const initialState: {allMessages:Message[], chatMessages:Message[]} = {
+    allMessages:[],
+    chatMessages:[]
+}
 
 const messagesSlice = createSlice({
     name: 'messages',
     initialState,
     reducers: {
         messages: (state, action: PayloadAction<Message[]>) => {
-            return action.payload
+            state.allMessages = action.payload
         },
         socketMessages: (state, action: PayloadAction<Message>) => {
-            state.push(action.payload)
+            state.allMessages.push(action.payload)
         }
     }
 })

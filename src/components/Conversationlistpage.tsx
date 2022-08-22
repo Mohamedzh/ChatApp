@@ -2,10 +2,16 @@ import { useState, useEffect } from 'react';
 import { Container } from 'react-bootstrap';
 import { useAppSelector } from '../redux/hooks';
 import  Cards  from './Cards';
+import {Socket} from 'socket.io-client'
+import { AppProps } from '../types';
 
-type Props = {};
 
-const ConversationListPage = (props: Props) => {
+const ConversationListPage = ({socket}: AppProps) => {
+  const user = useAppSelector(state => state.user);
+  useEffect(()=>{
+    socket?.emit('join', user.id);
+  }, [])
+
   return (
     <>
       <div id="hero">
