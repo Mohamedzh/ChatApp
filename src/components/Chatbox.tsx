@@ -4,34 +4,56 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { getMessages } from '../api';
 import moment from 'moment';
+import { sendHandler } from './functions'
+import { Socket } from 'socket.io-client';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+
 
 type Props = {
   message: string;
   messageHandler: Function;
-  sendHandler: Function;
+  socket: Socket
 };
 
-const Chatbox = ({ message, messageHandler, sendHandler }: Props) => {
-  
+const Chatbox = ({ message, messageHandler, socket }: Props) => {
+
   const dispatch = useDispatch();
   const id = useSelector((state: RootState) => state.user.id);
   const allMessages = useSelector((state: RootState) => state.message.allMessages);
 
-  
+
   useEffect(() => {
     getMessages(dispatch);
   }, []);
 
+  const formik = useFormik({
+    initialValues: {
+      message: ''
+    },
+    onSubmit: (values) => {
+      sendHandler(values.message, id, 0, socket)
+      // chatSendHandler(userId, socket, values.message, chatId, currentUserIds, firstName)
+      // console.log(currentUserIds);
+      // scrollToBottom()
+      window.scrollTo(0, 0);
+      formik.resetForm();
+    },
+    validationSchema: Yup.object({
+      message: Yup.string().required('Please enter your message'),
+    }),
+  });
+
   return (
     <div>
       <div
-      className="chatPageDiv"
+        className="chatPageDiv"
       >
         {allMessages.map((msg, idx) => (
           <div
-          className='chatBoxMessages'
+            className='chatBoxMessages'
             key={idx}
-            // className={msg.name === 'Me' ? 'myCard' : 'usersCard'}
+          // className={msg.name === 'Me' ? 'myCard' : 'usersCard'}
           >
             <b>{msg.user?.firstName}</b>
             <br />
@@ -52,13 +74,17 @@ const Chatbox = ({ message, messageHandler, sendHandler }: Props) => {
               style={{ height: '60px' }}
               aria-label="Recipient's username"
               aria-describedby="basic-addon2"
-              onChange={(e) => {
-                messageHandler(e);
-              }}
-              value={message}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.message}
+              name="message"
+              // onChange={(e) => {
+              //   messageHandler(e);
+              // }}
+              // value={message}
             />
             <Button
-              onClick={(e) => sendHandler(message, id)}
+              onClick={() => formik.handleSubmit()}
               variant="secondary"
               id="button-addon2"
             >

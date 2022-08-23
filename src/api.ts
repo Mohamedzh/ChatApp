@@ -1,7 +1,7 @@
 import axios from "axios";
 import { NavigateFunction } from "react-router-dom";
 import { Dispatch } from "redux";
-import { messages } from "./redux/features/messages-slice";
+import { chatMessages, messages } from "./redux/features/messages-slice";
 import { changeTheUserState } from "./redux/features/UserSlice";
 import { Conversation, decodedJWT, User, User2 } from "./types";
 import jwt_decode from "jwt-decode"
@@ -19,7 +19,7 @@ export const userSignIn = async (navigate: NavigateFunction, data: { email: stri
       const token = res.data.token
       localStorage.setItem("token", token)
       console.log(res.data)
-      dispatch(changeTheUserState({ loggedIn: true, id: res.data.user.id }))
+      dispatch(changeTheUserState({ loggedIn: true, id: res.data.user.id, firstName:res.data.user.firstName }))
       navigate("/conversations")
     } else {
       alert(res.data)
@@ -28,7 +28,7 @@ export const userSignIn = async (navigate: NavigateFunction, data: { email: stri
 }
 
 
-export const userSignInWithToken = async (token: string, navigate: NavigateFunction, dispatch: Dispatch, socket: Socket, user: { loggedIn: Boolean, id: number }) => {
+export const userSignInWithToken = async (token: string, navigate: NavigateFunction, dispatch: Dispatch, user: { loggedIn: Boolean, id: number }) => {
   const decoded: decodedJWT = jwt_decode(token)
   if (decoded.exp < Date.now() / 1000) {
     localStorage.removeItem('token')
@@ -37,7 +37,7 @@ export const userSignInWithToken = async (token: string, navigate: NavigateFunct
     const res = await axios.get("http://localhost:5000/user/signinwithtoken", { headers: { token } })
     //Another way to validate the token
     // if (res.data.currentUser) {
-    dispatch(changeTheUserState({ loggedIn: true, id: res.data.id }))
+    dispatch(changeTheUserState({ loggedIn: true, id: res.data.id, firstName: res.data.firstName }))
     dispatch(addConversations(res.data.conversations))
     navigate("/conversations")
   } catch (error) {
@@ -55,7 +55,7 @@ export const signUp = async (user: User, navigate: NavigateFunction, dispatch: D
     .then((response) => {
       console.log(response.data.token);
       localStorage.setItem('token', response.data.token);
-      dispatch(changeTheUserState({ loggedIn: true, id: response.data.id }))
+      dispatch(changeTheUserState({ loggedIn: true, id: response.data.id, firstName:response.data.firstName }))
       navigate("/conversations")
     })
 }
@@ -65,7 +65,7 @@ export const verifySignIn = async (token: { token: string }, dispatch: Dispatch)
     .then(response => {
       if (response.data.currentUser) {
         console.log(response.data);
-        dispatch(changeTheUserState({ loggedIn: true, id: response.data.id }))
+        dispatch(changeTheUserState({ loggedIn: true, id: response.data.id, firstName:response.data.firstName }))
       }
     });
 }
@@ -73,10 +73,19 @@ export const verifySignIn = async (token: { token: string }, dispatch: Dispatch)
 
 
 export const sendMessage = async (data: {
-  body: string;
-  id: number
+  body: string,
+  id: number,
+  conversation:number
 }) => {
   await axios.post('http://localhost:5000/messages/', data)
+}
+
+export const sendChatMessage = async (data: {
+  body: string,
+  id: number,
+  conversation:number
+}) => {
+  await axios.post('http://localhost:5000/messages', data)
 }
 
 
@@ -105,6 +114,7 @@ export const getChatDetails = async (id: string, dispatch: Dispatch) => {
   try {
     const res = await axios.get(`http://localhost:5000/conversations/${id}`)
     dispatch(addUserIds(res.data.users.map((user: User) => user.id)));
+    dispatch(chatMessages(res.data.messages))
     console.log(res.data.users)
   } catch (error) {
     console.log(error)

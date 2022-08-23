@@ -8,10 +8,10 @@ import { socketMessages } from '../redux/features/messages-slice';
 import { useAppSelector } from '../redux/hooks';
 
 type Props = {
-  socket:Socket
+  socket: Socket
 };
 
-const ChatPage = ({socket}: Props) => {
+const ChatPage = ({ socket }: Props) => {
   const dispatch = useDispatch();
   const user = useAppSelector(state => state.user);
   // const [socket, setSocket] = useState<Socket>()
@@ -34,11 +34,12 @@ const ChatPage = ({socket}: Props) => {
   };
 
 
-  const sendHandler = (messageBody: string, id: number) => {
+  const sendHandler = (messageBody: string, id: number, conversation: number) => {
     socket?.emit('newMessage', { body: messageBody, id });
     const messageData = {
       body: message,
-      id: id,
+      id,
+      conversation
     };
     sendMessage(messageData);
   };
@@ -51,7 +52,7 @@ const ChatPage = ({socket}: Props) => {
             <Chatbox
               messageHandler={messageHandler}
               message={message}
-              sendHandler={sendHandler}
+              socket={socket}
             />
           </Container>
         </div>

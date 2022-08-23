@@ -50,6 +50,8 @@
   border-radius: 5px;
   padding: 20px;
   padding-bottom: 40px;
+  max-height: 85vh;
+  overflow:auto;
 }
 
 .chatBoxMessages {
