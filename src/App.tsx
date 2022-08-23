@@ -30,7 +30,7 @@ function App() {
   const [socket, setSocket] = useState<Socket>()
 
   const getUser = async () => {
-    const currentUser = await userSignInWithToken(currentUserToken, navigate, dispatch, socket!, user)
+    const currentUser = await userSignInWithToken(currentUserToken, navigate, dispatch, user)
   }
 
 

@@ -1,4 +1,4 @@
-import { sendMessage, verifySignIn } from "../api"
+import { sendChatMessage, sendMessage, verifySignIn } from "../api"
 import { NavigateFunction} from 'react-router-dom'
 import { Dispatch } from "@reduxjs/toolkit"
 import jwt_decode from 'jwt-decode'
@@ -23,11 +23,23 @@ export const signOut =(navigate: NavigateFunction)=>{
     navigate("/login", { replace: true });
 }
 
-export const sendHandler = ( id: number, socket:Socket, message:string) => {
-    socket?.emit('newMessage', { body: message, id });
+export const chatSendHandler = ( id: number, socket:Socket, message:string, conversation:number, userIds:number[], firstName: string) => {
+    socket?.emit('aMessage', { body: message, userIds, firstName });
     const messageData = {
       body: message,
-      id: id,
+      id,
+      conversation
     };
+    sendChatMessage(messageData);
+  };
+
+  export const sendHandler = (messageBody: string, id: number, conversation: number, socket: Socket) => {
+    socket?.emit('newMessage', { body: messageBody, id });
+    const messageData = {
+      body: messageBody,
+      id,
+      conversation
+    };
+    console.log(messageData)
     sendMessage(messageData);
   };

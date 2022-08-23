@@ -33,8 +33,8 @@ const Header = ({socket}:Props) => {
               <p className="text-black-50 fs-3 ">Chat</p>
             </Navbar>
             <Nav className="ms-auto">
-              <Nav.Link><Link to="/chat">Main Chat</Link></Nav.Link>
-              <Nav.Link><Link to="/conversations">Group Chats</Link></Nav.Link>
+              <Nav.Link as="p"><Link to="/chat">Main Chat</Link></Nav.Link>
+              <Nav.Link as="p"><Link to="/conversations">Group Chats</Link></Nav.Link>
               <NavDropdown title="Actions" id="collasible-nav-dropdown">
                 <NavDropdown.Item onClick={() => handleShow()}>New conversation</NavDropdown.Item>
 
