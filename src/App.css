@@ -29,7 +29,7 @@
 
 #hero {
   background-image: url('./assets/img/pg.jpg') !important;
-  min-height: 100vh;
+  min-height: 90vh;
   background-size: cover;
 
 }
