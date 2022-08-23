@@ -28,6 +28,7 @@ function ChatDetails({ socket }: Props) {
 
     const currentUserIds = useAppSelector(state => state.chatUsers.currentUserIds)
     const allMessages = useAppSelector(state => state.message.chatMessages);
+    console.log(allMessages)
 
 
     useEffect(() => {
