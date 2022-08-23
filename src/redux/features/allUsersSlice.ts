@@ -11,10 +11,13 @@ export const allUsersSlice = createSlice({
   reducers: {
     getAllUsers: (state, action: PayloadAction<User[]>) => {
       return action.payload
+    },
+    addFromUsers: (state, action: PayloadAction<number>) => {
+      state.filter(user=>user.id!==action.payload)
     }
   }
 })
 
-export const { getAllUsers } = allUsersSlice.actions
+export const { getAllUsers,addFromUsers } = allUsersSlice.actions
 
 export default allUsersSlice.reducer

@@ -13,15 +13,19 @@ import * as Yup from 'yup';
 type Props = {
   message: string;
   messageHandler: Function;
-  socket: Socket
+  socket: Socket;
+  text: string
 };
 
-const Chatbox = ({ message, messageHandler, socket }: Props) => {
+const Chatbox = ({ message, messageHandler, socket, text }: Props) => {
 
   const dispatch = useDispatch();
   const id = useSelector((state: RootState) => state.user.id);
   const allMessages = useSelector((state: RootState) => state.message.allMessages);
 
+  const broadcast = () => {
+    socket.emit('typing', 'someone is typing...')
+  }
 
   useEffect(() => {
     getMessages(dispatch);
@@ -68,20 +72,23 @@ const Chatbox = ({ message, messageHandler, socket }: Props) => {
             </p>
           </div>
         ))}
+        <p style={{
+                color: '#00000070',
+              }}>{text}</p>
         <div style={{ marginTop: '150px', display: 'flex' }}>
           <InputGroup className="mb-3">
             <Form.Control
               style={{ height: '60px' }}
               aria-label="Recipient's username"
               aria-describedby="basic-addon2"
-              onChange={formik.handleChange}
+              onChange={(e) => { formik.handleChange(e); broadcast() }}
               onBlur={formik.handleBlur}
               value={formik.values.message}
               name="message"
-              // onChange={(e) => {
-              //   messageHandler(e);
-              // }}
-              // value={message}
+            // onChange={(e) => {
+            //   messageHandler(e);
+            // }}
+            // value={message}
             />
             <Button
               onClick={() => formik.handleSubmit()}

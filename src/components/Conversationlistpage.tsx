@@ -16,7 +16,7 @@ const ConversationListPage = ({socket}: AppProps) => {
     <>
       <div id="hero">
         <Container className="pt-5 pb-5 ">
-          <Cards />
+          <Cards socket={socket!}/>
         </Container>
       </div>
     </>
