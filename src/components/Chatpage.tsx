@@ -14,11 +14,19 @@ type Props = {
 const ChatPage = ({ socket }: Props) => {
   const dispatch = useDispatch();
   const user = useAppSelector(state => state.user);
-  // const [socket, setSocket] = useState<Socket>()
+  const [text, setText] = useState<string>()
 
 
   useEffect(() => {
     socket?.on('sendMessage', (message) => { dispatch(socketMessages(message)); console.log(message) })
+    socket?.on('typing', (text) => {
+      setText(text)
+      setTimeout(() => {
+        setText('')
+      }, 3000)
+
+    })
+
   }, [socket])
 
   // socket?.on('connect', () => {
@@ -53,6 +61,7 @@ const ChatPage = ({ socket }: Props) => {
               messageHandler={messageHandler}
               message={message}
               socket={socket}
+              text={text!}
             />
           </Container>
         </div>

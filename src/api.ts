@@ -94,12 +94,14 @@ export const getMessages = async (dispatch: Dispatch) => {
 }
 
 
-export const getUserConversations = async (dispatch: Dispatch) => {
-  await axios.get("http://localhost:5000/conversations").then(res => { dispatch(getChat(res.data)) })
-}
+// export const getUserConversations = async (dispatch: Dispatch) => {
+//   await axios.get("http://localhost:5000/conversations").then(res => { dispatch(getChat(res.data)) })
+// }
 
-export const getUsers = async (dispatch: Dispatch) => {
-  await axios.get('http://localhost:5000/user').then(res => { dispatch(getAllUsers(res.data)) })
+export const getUsers = async (dispatch: Dispatch, id: number) => {
+  const res = await axios.get('http://localhost:5000/user')
+  const users = res.data.filter((user:User)=>user.id!==id)
+  dispatch(getAllUsers(users))
 }
 
 export const newConversation = async (token: string, data: {
@@ -115,7 +117,6 @@ export const getChatDetails = async (id: string, dispatch: Dispatch) => {
     const res = await axios.get(`http://localhost:5000/conversations/${id}`)
     dispatch(addUserIds(res.data.users.map((user: User) => user.id)));
     dispatch(chatMessages(res.data.messages))
-    console.log(res.data.users)
   } catch (error) {
     console.log(error)
   }

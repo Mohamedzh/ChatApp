@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Container, Form, InputGroup } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { getChatDetails } from '../api';
@@ -11,14 +11,10 @@ import { Socket } from 'socket.io-client';
 import { chatSendHandler } from '../components/functions';
 import { chatSocketMessages } from '../redux/features/messages-slice';
 import ScrollToBottom, { useScrollToBottom } from 'react-scroll-to-bottom';
+import { AppProps } from '../types';
 
 
-
-type Props = {
-    socket: Socket
-}
-
-function ChatDetails({ socket }: Props) {
+function ChatDetails({ socket }: AppProps) {
     const { id } = useParams()
     const chatId = +id!
     const scrollToBottom = useScrollToBottom()
@@ -28,17 +24,17 @@ function ChatDetails({ socket }: Props) {
 
     const currentUserIds = useAppSelector(state => state.chatUsers.currentUserIds)
     const allMessages = useAppSelector(state => state.message.chatMessages);
-    console.log(allMessages)
 
+    const [joinMsg, setJoinMsg] = useState<string>()
 
     useEffect(() => {
         socket?.on('aMessage', args => {
-            console.log(args);
             dispatch(chatSocketMessages(args))
         })
         // return ()=> {
         //     socket?.off('aMessage')
         // }
+        socket?.on('joinMsg', text => { setJoinMsg(text) })
     }, []);
 
 
@@ -52,8 +48,7 @@ function ChatDetails({ socket }: Props) {
             message: ''
         },
         onSubmit: (values) => {
-            chatSendHandler(userId, socket, values.message, chatId, currentUserIds, firstName)
-            console.log(currentUserIds);
+            chatSendHandler(userId, socket!, values.message, chatId, currentUserIds, firstName)
             scrollToBottom()
             window.scrollTo(0, 0);
             formik.resetForm();
@@ -92,6 +87,10 @@ function ChatDetails({ socket }: Props) {
                                             </p>
                                         </div>
                                     ))}
+                                    <h4 
+                                    // style={{
+                                    //     color: '#00000070',}}
+                                        >{joinMsg}</h4>
                                     <div style={{ marginTop: '150px', display: 'flex' }}>
                                         <InputGroup className="mb-3">
                                             <Form.Control

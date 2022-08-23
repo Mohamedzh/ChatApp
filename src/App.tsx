@@ -7,7 +7,7 @@ import ConversationListPage from './components/ConversationListPage';
 import ChatPage from './components/ChatPage';
 import Header from './components/Header';
 import ProtectedRoutes from './pages/ProtectedRoutes';
-import { getUserConversations, userSignInWithToken } from './api';
+import { userSignInWithToken } from './api';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from './redux/store';
 import { io, Socket } from 'socket.io-client';
@@ -25,7 +25,6 @@ function App() {
   const navigate = useNavigate();
 
   const data = useSelector((state: RootState) => state.user);
-  console.log(data);
 
   const [socket, setSocket] = useState<Socket>()
 
