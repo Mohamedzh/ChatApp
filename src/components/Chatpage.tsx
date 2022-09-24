@@ -24,7 +24,7 @@ const ChatPage = ({ socket }: Props) => {
       setTimeout(() => {
         setText('')
       }, 3000)
-
+//Can use onfocus / on blur instead
     })
 
   }, [socket])
