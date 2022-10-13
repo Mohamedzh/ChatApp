@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Container } from 'react-bootstrap';
 import { useAppSelector } from '../redux/hooks';
-import  Cards  from './Cards';
+import  Cards  from './cards';
 import {Socket} from 'socket.io-client'
 import { AppProps } from '../types';
 

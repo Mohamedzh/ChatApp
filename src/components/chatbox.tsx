@@ -2,9 +2,9 @@ import React, { useEffect } from 'react';
 import { Button, Form, InputGroup } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
-import { getMessages } from '../api';
+import { getMessages } from '../lib/api';
 import moment from 'moment';
-import { sendHandler } from './functions'
+import { sendHandler } from '../lib/functions'
 import { Socket } from 'socket.io-client';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';

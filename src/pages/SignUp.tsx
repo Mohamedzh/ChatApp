@@ -1,6 +1,6 @@
 import React from 'react';
 import { Row, Col } from 'react-bootstrap';
-import SignUpForm from '../components/SignUpForm';
+import SignUpForm from '../components/signUpForm';
 
 const SignUp = () => {
   return (

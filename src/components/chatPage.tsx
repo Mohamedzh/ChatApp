@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
-import Chatbox from './Chatbox';
+import Chatbox from './chatbox';
 import io, { Socket } from 'socket.io-client';
 import { useSelector, useDispatch } from 'react-redux';
-import { sendMessage } from '../api';
+import { sendMessage } from '../lib/api';
 import { socketMessages } from '../redux/features/messages-slice';
 import { useAppSelector } from '../redux/hooks';
 

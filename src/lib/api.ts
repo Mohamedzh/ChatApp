@@ -1,25 +1,22 @@
 import axios from "axios";
 import { NavigateFunction } from "react-router-dom";
 import { Dispatch } from "redux";
-import { chatMessages, messages } from "./redux/features/messages-slice";
-import { changeTheUserState } from "./redux/features/UserSlice";
-import { Conversation, decodedJWT, User, User2 } from "./types";
+import { chatMessages, messages } from "../redux/features/messages-slice";
+import { changeTheUserState } from "../redux/features/UserSlice";
+import { decodedJWT, User } from "../types";
 import jwt_decode from "jwt-decode"
-import { getChat } from "./redux/features/conversation-slice";
-import { getAllUsers } from "./redux/features/allUsersSlice";
-import { Socket } from "socket.io-client";
-import { addConversations, addUserIds } from "./redux/features/chatUsersSlice";
+import { getAllUsers } from "../redux/features/allUsersSlice";
+import { addConversations, addUserIds } from "../redux/features/chatUsersSlice";
 
 export const userSignIn = async (navigate: NavigateFunction, data: { email: string, password: string }, dispatch: Dispatch
 ) => {
   await axios.post("http://localhost:5000/user/signin", data).then(res => {
     console.log(res.data)
-
     if (res.data.token) {
       const token = res.data.token
       localStorage.setItem("token", token)
       console.log(res.data)
-      dispatch(changeTheUserState({ loggedIn: true, id: res.data.user.id, firstName:res.data.user.firstName }))
+      dispatch(changeTheUserState({ loggedIn: true, id: res.data.user.id, firstName: res.data.user.firstName }))
       navigate("/conversations")
     } else {
       alert(res.data)
@@ -35,6 +32,8 @@ export const userSignInWithToken = async (token: string, navigate: NavigateFunct
   }
   try {
     const res = await axios.get("http://localhost:5000/user/signinwithtoken", { headers: { token } })
+    console.log(res);
+
     //Another way to validate the token
     // if (res.data.currentUser) {
     dispatch(changeTheUserState({ loggedIn: true, id: res.data.id, firstName: res.data.firstName }))
@@ -53,9 +52,9 @@ export const userSignInWithToken = async (token: string, navigate: NavigateFunct
 export const signUp = async (user: User, navigate: NavigateFunction, dispatch: Dispatch) => {
   await axios.post('http://localhost:5000/user/signup', user)
     .then((response) => {
-      console.log(response.data.token);
+      console.log(response.data);
       localStorage.setItem('token', response.data.token);
-      dispatch(changeTheUserState({ loggedIn: true, id: response.data.id, firstName:response.data.firstName }))
+      dispatch(changeTheUserState({ loggedIn: true, id: response.data.id, firstName: response.data.firstName }))
       navigate("/conversations")
     })
 }
@@ -65,7 +64,7 @@ export const verifySignIn = async (token: { token: string }, dispatch: Dispatch)
     .then(response => {
       if (response.data.currentUser) {
         console.log(response.data);
-        dispatch(changeTheUserState({ loggedIn: true, id: response.data.id, firstName:response.data.firstName }))
+        dispatch(changeTheUserState({ loggedIn: true, id: response.data.id, firstName: response.data.firstName }))
       }
     });
 }
@@ -75,7 +74,7 @@ export const verifySignIn = async (token: { token: string }, dispatch: Dispatch)
 export const sendMessage = async (data: {
   body: string,
   id: number,
-  conversation:number
+  conversation: number
 }) => {
   await axios.post('http://localhost:5000/messages/', data)
 }
@@ -83,7 +82,7 @@ export const sendMessage = async (data: {
 export const sendChatMessage = async (data: {
   body: string,
   id: number,
-  conversation:number
+  conversation: number
 }) => {
   await axios.post('http://localhost:5000/messages', data)
 }
@@ -100,7 +99,7 @@ export const getMessages = async (dispatch: Dispatch) => {
 
 export const getUsers = async (dispatch: Dispatch, id: number) => {
   const res = await axios.get('http://localhost:5000/user')
-  const users = res.data.filter((user:User)=>user.id!==id)
+  const users = res.data.filter((user: User) => user.id !== id)
   dispatch(getAllUsers(users))
 }
 

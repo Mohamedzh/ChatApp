@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Container, Form, InputGroup } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { getChatDetails } from '../api';
+import { getChatDetails } from '../lib/api';
 import moment from 'moment';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useAppSelector } from '../redux/hooks';
 import { useParams } from 'react-router-dom';
 import { Socket } from 'socket.io-client';
-import { chatSendHandler } from '../components/functions';
+import { chatSendHandler } from '../lib/functions';
 import { chatSocketMessages } from '../redux/features/messages-slice';
 import ScrollToBottom, { useScrollToBottom } from 'react-scroll-to-bottom';
 import { AppProps } from '../types';
