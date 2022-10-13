@@ -34,7 +34,7 @@ function App() {
 
 
   useEffect(() => {
-    setSocket(io('ws://chat-app-backend-production.up.railway.app:3131'));
+    setSocket(io(`ws://${process.env.REACT_APP_SOCKET_ID}`));
     getUser()
     // userSignInWithToken(currentUserToken, navigate, dispatch, socket!, user);
   }, []);
