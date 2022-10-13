@@ -2,7 +2,7 @@ import { useFormik } from 'formik';
 import React, { useEffect } from 'react';
 import { Card, Modal, Form, Button, Badge } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
-import { getUsers, newConversation } from '../api';
+import { getUsers, newConversation } from '../lib/api';
 import { clearChatUsers, getChatUsers, getUserNames } from '../redux/features/chatUsersSlice';
 import { useAppSelector } from '../redux/hooks';
 import * as Yup from 'yup';

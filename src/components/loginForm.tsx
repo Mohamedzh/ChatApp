@@ -3,29 +3,21 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Button, Form } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
-import { signUp } from '../api';
+import { userSignIn } from '../lib/api';
 import { useDispatch } from 'react-redux';
-import { User } from '../types';
 
-const SignUpForm = () => {
-  const dispatch = useDispatch();
+const LoginForm = () => {
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
-      firstName: '',
-      lastName: '',
       email: '',
       password: '',
     },
-    onSubmit: (values) => {
-      console.log(values);
-      signUp(values as User, navigate, dispatch);
-      formik.resetForm();
+    onSubmit: async (values) => {
+      await userSignIn(navigate, values, dispatch);
     },
     validationSchema: Yup.object({
-      firstName: Yup.string().required('Please enter your first name'),
-      lastName: Yup.string().required('Please enter your last name'),
       email: Yup.string().required('Please enter your email'),
       password: Yup.string().required('Please enter your password'),
     }),
@@ -34,34 +26,6 @@ const SignUpForm = () => {
   return (
     <div className="d-flex flex-column w-72 justify-content-center my-5">
       <Form>
-        <Form.Group className="mb-3 text-start" controlId="formBasicEmail">
-          <Form.Label>First Name</Form.Label>
-          <Form.Control
-            type="text"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.firstName}
-            name="firstName"
-          />
-          {formik.touched.firstName && formik.errors.firstName ? (
-            <span className="errorText">{formik.errors.firstName}</span>
-          ) : null}
-        </Form.Group>
-
-        <Form.Group className="mb-3 text-start" controlId="formBasicEmail">
-          <Form.Label>Last Name</Form.Label>
-          <Form.Control
-            type="text"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.lastName}
-            name="lastName"
-          />
-          {formik.touched.lastName && formik.errors.lastName ? (
-            <span className="errorText">{formik.errors.lastName}</span>
-          ) : null}
-        </Form.Group>
-
         <Form.Group className="mb-3 text-start" controlId="formBasicEmail">
           <Form.Label>Email</Form.Label>
           <Form.Control
@@ -85,24 +49,26 @@ const SignUpForm = () => {
             value={formik.values.password}
             name="password"
           />
+
           {formik.touched.password && formik.errors.password ? (
             <span className="errorText">{formik.errors.password}</span>
           ) : null}
+
         </Form.Group>
       </Form>
       <Button
+        onClick={() => formik.handleSubmit()}
         variant="outline-secondary"
         type="submit"
         className="mt-5"
-        onClick={() => formik.handleSubmit()}
       >
-        SignUp
+        Login
       </Button>
       <p className="text-center	">
-        Already have an account? <Link to="/login">Login</Link>
+        Don't have an account? <Link to="/">SignUp</Link>
       </p>
     </div>
   );
 };
 
-export default SignUpForm;
+export default LoginForm;

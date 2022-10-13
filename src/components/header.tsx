@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Navbar, Container, NavDropdown, Nav } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom'
-import { signOut } from './functions';
-import ConversationForm from './NewConversationForm';
+import { signOut } from '../lib/functions';
+import ConversationForm from './newConversationForm';
 import { io, Socket } from 'socket.io-client';
 import { useAppSelector } from '../redux/hooks';
 
