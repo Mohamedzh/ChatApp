@@ -34,8 +34,10 @@ function App() {
 
 
   useEffect(() => {
-    setSocket(io(`ws://${process.env.REACT_APP_SOCKET_ID}`));
+    setSocket(io(`${process.env.REACT_APP_SOCKET_ID}`));
     getUser()
+    console.log(process.env.REACT_APP_SOCKET_ID);
+    
     // userSignInWithToken(currentUserToken, navigate, dispatch, socket!, user);
   }, []);
 

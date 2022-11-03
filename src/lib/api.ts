@@ -11,11 +11,11 @@ import { addConversations, addUserIds } from "../redux/features/chatUsersSlice";
 export const userSignIn = async (navigate: NavigateFunction, data: { email: string, password: string }, dispatch: Dispatch
 ) => {
   await axios.post("http://localhost:5000/user/signin", data).then(res => {
-    console.log(res.data)
+    // console.log(res.data)
     if (res.data.token) {
       const token = res.data.token
       localStorage.setItem("token", token)
-      console.log(res.data)
+      // console.log(res.data)
       dispatch(changeTheUserState({ loggedIn: true, id: res.data.user.id, firstName: res.data.user.firstName }))
       navigate("/conversations")
     } else {
@@ -32,7 +32,7 @@ export const userSignInWithToken = async (token: string, navigate: NavigateFunct
   }
   try {
     const res = await axios.get("http://localhost:5000/user/signinwithtoken", { headers: { token } })
-    console.log(res);
+    // console.log(res);
 
     //Another way to validate the token
     // if (res.data.currentUser) {
@@ -52,7 +52,7 @@ export const userSignInWithToken = async (token: string, navigate: NavigateFunct
 export const signUp = async (user: User, navigate: NavigateFunction, dispatch: Dispatch) => {
   await axios.post('http://localhost:5000/user/signup', user)
     .then((response) => {
-      console.log(response.data);
+      // console.log(response.data);
       localStorage.setItem('token', response.data.token);
       dispatch(changeTheUserState({ loggedIn: true, id: response.data.id, firstName: response.data.firstName }))
       navigate("/conversations")
@@ -63,7 +63,7 @@ export const verifySignIn = async (token: { token: string }, dispatch: Dispatch)
   await axios.post('http://localhost:5000/user/details', token)
     .then(response => {
       if (response.data.currentUser) {
-        console.log(response.data);
+        // console.log(response.data);
         dispatch(changeTheUserState({ loggedIn: true, id: response.data.id, firstName: response.data.firstName }))
       }
     });
