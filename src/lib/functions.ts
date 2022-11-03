@@ -7,7 +7,7 @@ import { Socket } from "socket.io-client"
 
 export const VerifyUser = (navigate: NavigateFunction, dispatch: Dispatch) => {
   const token = localStorage.getItem('token') || ""
-  console.log(token)
+  // console.log(token)
   const decoded: decodedJWT = jwt_decode(token)
   if (decoded.exp < Date.now() / 1000) {
     localStorage.removeItem('token')
@@ -40,7 +40,7 @@ export const sendHandler = (messageBody: string, id: number, conversation: numbe
     id,
     conversation
   };
-  console.log(messageData)
+  // console.log(messageData)
   sendMessage(messageData);
 };
 

@@ -37,7 +37,7 @@ function ConversationForm({ show, handleClose, handleShow }: Props) {
       title: ''
     },
     onSubmit: (values) => {
-      console.log(values);
+      // console.log(values);
       const data = {
         userIds,
         title: values.title,
@@ -59,7 +59,7 @@ function ConversationForm({ show, handleClose, handleShow }: Props) {
 
   const addUser = (id: number, name: string) => {
     dispatch(getChatUsers(id))
-    console.log(userIds)
+    // console.log(userIds)
     dispatch(getUserNames(name))
     let newUsers = users.filter(user => user.id !== id)
     dispatch(getAllUsers(newUsers))
