@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Card, Image } from 'react-bootstrap';
 import useImg from '../assets/img/32.jpg';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../redux/hooks';
 import { useNavigate } from 'react-router-dom';
 import { AppProps } from '../types';
