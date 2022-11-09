@@ -41,9 +41,9 @@ function App() {
     // userSignInWithToken(currentUserToken, navigate, dispatch, socket!, user);
   }, []);
 
-  // socket?.on('connect', () => {
-  //   socket?.emit('join', user.id);
-  // })
+  socket?.on('connect', () => {
+    console.log('connected socket');
+  })
 
   return (
     <div className="App">
