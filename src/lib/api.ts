@@ -10,7 +10,7 @@ import { addConversations, addUserIds } from "../redux/features/chatUsersSlice";
 
 export const userSignIn = async (navigate: NavigateFunction, data: { email: string, password: string }, dispatch: Dispatch
 ) => {
-  await axios.post("http://localhost:5000/user/signin", data).then(res => {
+  await axios.post(`${process.env.REACT_APP_BASE_URL}/user/signin`, data).then(res => {
     // console.log(res.data)
     if (res.data.token) {
       const token = res.data.token
@@ -31,7 +31,7 @@ export const userSignInWithToken = async (token: string, navigate: NavigateFunct
     localStorage.removeItem('token')
   }
   try {
-    const res = await axios.get("http://localhost:5000/user/signinwithtoken", { headers: { token } })
+    const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/user/signinwithtoken`, { headers: { token } })
     // console.log(res);
 
     //Another way to validate the token
@@ -50,7 +50,7 @@ export const userSignInWithToken = async (token: string, navigate: NavigateFunct
 
 
 export const signUp = async (user: User, navigate: NavigateFunction, dispatch: Dispatch) => {
-  await axios.post('http://localhost:5000/user/signup', user)
+  await axios.post(`${process.env.REACT_APP_BASE_URL}/user/signup`, user)
     .then((response) => {
       // console.log(response.data);
       localStorage.setItem('token', response.data.token);
@@ -60,7 +60,7 @@ export const signUp = async (user: User, navigate: NavigateFunction, dispatch: D
 }
 
 export const verifySignIn = async (token: { token: string }, dispatch: Dispatch) => {
-  await axios.post('http://localhost:5000/user/details', token)
+  await axios.post(`${process.env.REACT_APP_BASE_URL}/user/details`, token)
     .then(response => {
       if (response.data.currentUser) {
         // console.log(response.data);
@@ -76,7 +76,7 @@ export const sendMessage = async (data: {
   id: number,
   conversation: number
 }) => {
-  await axios.post('http://localhost:5000/messages/', data)
+  await axios.post(`${process.env.REACT_APP_BASE_URL}/messages/`, data)
 }
 
 export const sendChatMessage = async (data: {
@@ -84,12 +84,12 @@ export const sendChatMessage = async (data: {
   id: number,
   conversation: number
 }) => {
-  await axios.post('http://localhost:5000/messages', data)
+  await axios.post(`${process.env.REACT_APP_BASE_URL}/messages`, data)
 }
 
 
 export const getMessages = async (dispatch: Dispatch) => {
-  await axios.get("http://localhost:5000/messages/all").then(res => { dispatch(messages(res.data)) })
+  await axios.get(`${process.env.REACT_APP_BASE_URL}/messages/all`).then(res => { dispatch(messages(res.data)) })
 }
 
 
@@ -98,7 +98,7 @@ export const getMessages = async (dispatch: Dispatch) => {
 // }
 
 export const getUsers = async (dispatch: Dispatch, id: number) => {
-  const res = await axios.get('http://localhost:5000/user')
+  const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/user`)
   const users = res.data.filter((user: User) => user.id !== id)
   dispatch(getAllUsers(users))
 }
@@ -108,12 +108,12 @@ export const newConversation = async (token: string, data: {
   title: string,
   id: number
 }) => {
-  await axios.post('http://localhost:5000/conversations', data, { headers: { token } })
+  await axios.post(`${process.env.REACT_APP_BASE_URL}/conversations`, data, { headers: { token } })
 }
 
 export const getChatDetails = async (id: string, dispatch: Dispatch) => {
   try {
-    const res = await axios.get(`http://localhost:5000/conversations/${id}`)
+    const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/conversations/${id}`)
     dispatch(addUserIds(res.data.users.map((user: User) => user.id)));
     dispatch(chatMessages(res.data.messages))
   } catch (error) {
