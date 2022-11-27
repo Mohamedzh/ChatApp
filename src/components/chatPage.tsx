@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import Chatbox from './chatbox';
-import io, { Socket } from 'socket.io-client';
-import { useSelector, useDispatch } from 'react-redux';
+import { Socket } from 'socket.io-client';
+import { useDispatch } from 'react-redux';
 import { sendMessage } from '../lib/api';
 import { socketMessages } from '../redux/features/messages-slice';
 import { useAppSelector } from '../redux/hooks';
@@ -13,18 +13,17 @@ type Props = {
 
 const ChatPage = ({ socket }: Props) => {
   const dispatch = useDispatch();
-  const user = useAppSelector(state => state.user);
   const [text, setText] = useState<string>()
 
 
   useEffect(() => {
-    socket?.on('sendMessage', (message) => { dispatch(socketMessages(message)); console.log(message) })
+    socket?.on('sendMessage', (message) => { dispatch(socketMessages(message)) })
     socket?.on('typing', (text) => {
       setText(text)
       setTimeout(() => {
         setText('')
       }, 3000)
-//Can use onfocus / on blur instead
+      //Can use onfocus / on blur instead
     })
 
   }, [socket])

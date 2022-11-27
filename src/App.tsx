@@ -9,10 +9,8 @@ import Header from './components/header';
 import ProtectedRoutes from './pages/ProtectedRoutes';
 import { userSignInWithToken } from './lib/api';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from './redux/store';
 import { io, Socket } from 'socket.io-client';
 import ChatDetails from './pages/ChatDetails';
-import { socketMessages } from './redux/features/messages-slice';
 import { useAppSelector } from './redux/hooks';
 
 
@@ -23,8 +21,6 @@ function App() {
   const currentUserToken = localStorage.getItem('token') || '';
 
   const navigate = useNavigate();
-
-  const data = useSelector((state: RootState) => state.user);
 
   const [socket, setSocket] = useState<Socket>()
 

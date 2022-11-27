@@ -1,18 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Navbar, Container, NavDropdown, Nav } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom'
 import { signOut } from '../lib/functions';
 import ConversationForm from './newConversationForm';
-import { io, Socket } from 'socket.io-client';
-import { useAppSelector } from '../redux/hooks';
+import { Socket } from 'socket.io-client';
 
 type Props = {
-  socket:Socket
+  socket: Socket
 }
 
-const Header = ({socket}:Props) => {
-  const user = useAppSelector(state => state.user);
+const Header = ({ socket }: Props) => {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -38,7 +36,7 @@ const Header = ({socket}:Props) => {
               <NavDropdown title="Actions" id="collasible-nav-dropdown">
                 <NavDropdown.Item onClick={() => handleShow()}>New conversation</NavDropdown.Item>
 
-                <ConversationForm show={show} handleClose={handleClose} handleShow={handleShow}  />
+                <ConversationForm show={show} handleClose={handleClose} handleShow={handleShow} />
 
                 <NavDropdown.Divider />
                 <NavDropdown.Item onClick={() => signOut(navigate)}>
