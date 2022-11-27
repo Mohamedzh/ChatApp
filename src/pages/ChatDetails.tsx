@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Container, Form, InputGroup } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { getChatDetails } from '../lib/api';
 import moment from 'moment';
 import { useFormik } from 'formik';
@@ -86,10 +86,10 @@ function ChatDetails({ socket }: AppProps) {
                                             </p>
                                         </div>
                                     ))}
-                                    <h4 
+                                    <h4
                                     // style={{
                                     //     color: '#00000070',}}
-                                        >{joinMsg}</h4>
+                                    >{joinMsg}</h4>
                                     <div style={{ marginTop: '150px', display: 'flex' }}>
                                         <InputGroup className="mb-3">
                                             <Form.Control
